@@ -7,13 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		482880F61EB107AD006801E1 /* String+Regex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 482880F51EB107AD006801E1 /* String+Regex.swift */; };
+		482880F91EB13288006801E1 /* IGCPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 482880F81EB13288006801E1 /* IGCPoint.swift */; };
+		482880FB1EB13340006801E1 /* IGCWaypoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 482880FA1EB13340006801E1 /* IGCWaypoint.swift */; };
 		48ECFA8D1EB0C4A80063C09B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48ECFA8C1EB0C4A80063C09B /* AppDelegate.swift */; };
 		48ECFA8F1EB0C4A80063C09B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48ECFA8E1EB0C4A80063C09B /* ViewController.swift */; };
-		48ECFA911EB0C4A80063C09B /* Document.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48ECFA901EB0C4A80063C09B /* Document.swift */; };
+		48ECFA911EB0C4A80063C09B /* IGCDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48ECFA901EB0C4A80063C09B /* IGCDocument.swift */; };
 		48ECFA931EB0C4A80063C09B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 48ECFA921EB0C4A80063C09B /* Assets.xcassets */; };
 		48ECFA961EB0C4A80063C09B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 48ECFA941EB0C4A80063C09B /* Main.storyboard */; };
 		48ECFAA11EB0C4A80063C09B /* IGCViewerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48ECFAA01EB0C4A80063C09B /* IGCViewerTests.swift */; };
 		48ECFAAC1EB0C4A80063C09B /* IGCViewerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48ECFAAB1EB0C4A80063C09B /* IGCViewerUITests.swift */; };
+		48ECFABA1EB0D3950063C09B /* IGCParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48ECFAB91EB0D3950063C09B /* IGCParser.swift */; };
+		48ECFABC1EB0D3A60063C09B /* IGCFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48ECFABB1EB0D3A60063C09B /* IGCFile.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,10 +39,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		482880F51EB107AD006801E1 /* String+Regex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Regex.swift"; sourceTree = "<group>"; };
+		482880F81EB13288006801E1 /* IGCPoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IGCPoint.swift; sourceTree = "<group>"; };
+		482880FA1EB13340006801E1 /* IGCWaypoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IGCWaypoint.swift; sourceTree = "<group>"; };
 		48ECFA891EB0C4A80063C09B /* IGCViewer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IGCViewer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		48ECFA8C1EB0C4A80063C09B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		48ECFA8E1EB0C4A80063C09B /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		48ECFA901EB0C4A80063C09B /* Document.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Document.swift; sourceTree = "<group>"; };
+		48ECFA901EB0C4A80063C09B /* IGCDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IGCDocument.swift; sourceTree = "<group>"; };
 		48ECFA921EB0C4A80063C09B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		48ECFA951EB0C4A80063C09B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		48ECFA971EB0C4A80063C09B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -47,6 +55,8 @@
 		48ECFAA71EB0C4A80063C09B /* IGCViewerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IGCViewerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		48ECFAAB1EB0C4A80063C09B /* IGCViewerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IGCViewerUITests.swift; sourceTree = "<group>"; };
 		48ECFAAD1EB0C4A80063C09B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		48ECFAB91EB0D3950063C09B /* IGCParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IGCParser.swift; sourceTree = "<group>"; };
+		48ECFABB1EB0D3A60063C09B /* IGCFile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IGCFile.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,6 +84,25 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		482880F41EB10797006801E1 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				482880F51EB107AD006801E1 /* String+Regex.swift */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		482880F71EB13266006801E1 /* IGC */ = {
+			isa = PBXGroup;
+			children = (
+				48ECFAB91EB0D3950063C09B /* IGCParser.swift */,
+				48ECFABB1EB0D3A60063C09B /* IGCFile.swift */,
+				482880F81EB13288006801E1 /* IGCPoint.swift */,
+				482880FA1EB13340006801E1 /* IGCWaypoint.swift */,
+			);
+			name = IGC;
+			sourceTree = "<group>";
+		};
 		48ECFA801EB0C4A70063C09B = {
 			isa = PBXGroup;
 			children = (
@@ -99,10 +128,12 @@
 			children = (
 				48ECFA8C1EB0C4A80063C09B /* AppDelegate.swift */,
 				48ECFA8E1EB0C4A80063C09B /* ViewController.swift */,
-				48ECFA901EB0C4A80063C09B /* Document.swift */,
+				48ECFA901EB0C4A80063C09B /* IGCDocument.swift */,
+				482880F71EB13266006801E1 /* IGC */,
 				48ECFA921EB0C4A80063C09B /* Assets.xcassets */,
 				48ECFA941EB0C4A80063C09B /* Main.storyboard */,
 				48ECFA971EB0C4A80063C09B /* Info.plist */,
+				482880F41EB10797006801E1 /* Supporting Files */,
 			);
 			path = IGCViewer;
 			sourceTree = "<group>";
@@ -261,9 +292,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				48ECFABC1EB0D3A60063C09B /* IGCFile.swift in Sources */,
 				48ECFA8F1EB0C4A80063C09B /* ViewController.swift in Sources */,
+				482880FB1EB13340006801E1 /* IGCWaypoint.swift in Sources */,
+				482880F61EB107AD006801E1 /* String+Regex.swift in Sources */,
 				48ECFA8D1EB0C4A80063C09B /* AppDelegate.swift in Sources */,
-				48ECFA911EB0C4A80063C09B /* Document.swift in Sources */,
+				48ECFABA1EB0D3950063C09B /* IGCParser.swift in Sources */,
+				482880F91EB13288006801E1 /* IGCPoint.swift in Sources */,
+				48ECFA911EB0C4A80063C09B /* IGCDocument.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -511,6 +547,7 @@
 				48ECFAB21EB0C4A80063C09B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		48ECFAB31EB0C4A80063C09B /* Build configuration list for PBXNativeTarget "IGCViewerTests" */ = {
 			isa = XCConfigurationList;
@@ -519,6 +556,7 @@
 				48ECFAB51EB0C4A80063C09B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		48ECFAB61EB0C4A80063C09B /* Build configuration list for PBXNativeTarget "IGCViewerUITests" */ = {
 			isa = XCConfigurationList;
@@ -527,6 +565,7 @@
 				48ECFAB81EB0C4A80063C09B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

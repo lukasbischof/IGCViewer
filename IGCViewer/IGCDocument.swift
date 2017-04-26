@@ -8,7 +8,9 @@
 
 import Cocoa
 
-class Document: NSDocument {
+class IGCDocument: NSDocument {
+    
+    var igcFile: IGCFile!
 
     override init() {
         super.init()
@@ -16,27 +18,42 @@ class Document: NSDocument {
     }
 
     override class func autosavesInPlace() -> Bool {
-        return true
+        return false
     }
 
     override func makeWindowControllers() {
         // Returns the Storyboard that contains your Document window.
         let storyboard = NSStoryboard(name: "Main", bundle: nil)
         let windowController = storyboard.instantiateController(withIdentifier: "Document Window Controller") as! NSWindowController
+        windowController.window?.backgroundColor = NSColor.white
+        windowController.window?.titlebarAppearsTransparent = true
         self.addWindowController(windowController)
     }
 
     override func data(ofType typeName: String) throws -> Data {
+        Swift.print("\(#function)")
+        
         // Insert code here to write your document to data of the specified type. If outError != nil, ensure that you create and set an appropriate error when returning nil.
         // You can also choose to override fileWrapperOfType:error:, writeToURL:ofType:error:, or writeToURL:ofType:forSaveOperation:originalContentsURL:error: instead.
         throw NSError(domain: NSOSStatusErrorDomain, code: unimpErr, userInfo: nil)
     }
 
     override func read(from data: Data, ofType typeName: String) throws {
+        Swift.print("\(#function)")
         // Insert code here to read your document from the given data of the specified type. If outError != nil, ensure that you create and set an appropriate error when returning false.
         // You can also choose to override readFromFileWrapper:ofType:error: or readFromURL:ofType:error: instead.
         // If you override either of these, you should also override -isEntireFileLoaded to return false if the contents are lazily loaded.
-        throw NSError(domain: NSOSStatusErrorDomain, code: unimpErr, userInfo: nil)
+        
+        let parser = IGCParser(data: data)
+        do {
+            try parser.parse()
+            
+            self.igcFile = parser.outputFile
+        } catch IGCParsingError.fileEncodingNotValid {
+            Swift.print("File encoding not valid!!")
+        } catch IGCParsingError.fileNotValid(let atLine, let why) {
+            Swift.print("Can't parse file. Error at line \(atLine): \(why)")
+        }
     }
 
 
