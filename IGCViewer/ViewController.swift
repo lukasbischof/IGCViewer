@@ -9,17 +9,50 @@
 import Cocoa
 import MapKit
 
+enum ViewControllerError: Error {
+    case noRecordingDateSpecified
+}
+
 class ViewController: NSViewController, MKMapViewDelegate {
+    
+    @IBOutlet weak var titleTextField: NSTextField!
+    @IBOutlet weak var pilotTextField: NSTextField!
+    @IBOutlet weak var coPilotTextField: NSTextField!
+    @IBOutlet weak var aircraftTextField: NSTextField!
+    @IBOutlet weak var registrationTextField: NSTextField!
+    @IBOutlet weak var classificationTextField: NSTextField!
+    @IBOutlet weak var startTextField: NSTextField!
+    @IBOutlet weak var endTextField: NSTextField!
+    @IBOutlet weak var durationTextField: NSTextField!
+    @IBOutlet weak var avgSpeedTextField: NSTextField!
+    @IBOutlet weak var distanceTextField: NSTextField!
+    
+    @IBOutlet weak var pressureAltTextField: NSTextField!
+    @IBOutlet weak var gnssAltTextField: NSTextField!
+    @IBOutlet weak var varioTextField: NSTextField!
+    @IBOutlet weak var latitudeTextField: NSTextField!
+    @IBOutlet weak var longitudeTextField: NSTextField!
+    @IBOutlet weak var timeTextField: NSTextField!
+    
+    @IBOutlet weak var slider: NSSlider!
+    @IBOutlet weak var backButton: NSButton!
+    @IBOutlet weak var forwardButton: NSButton!
 
     @IBOutlet weak var mapView: MKMapView!
     var document: IGCDocument!
+    var occurredError: Error?
+    var annotation: MKPointAnnotation!
+    var currentWaypointIndex: Int = 0
     
+    // MARK: - View lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
         
         mapView.delegate = self
+        mapView.layer?.borderColor = NSColor.lightGray.cgColor
+        mapView.layer?.borderWidth = 1.0
     }
     
     override func viewDidAppear() {
@@ -35,6 +68,7 @@ class ViewController: NSViewController, MKMapViewDelegate {
             #endif
         }
         
+        // *** DRAW LINE
         var points: [CLLocationCoordinate2D] = []
         for waypoint in document.igcFile.waypoints {
             let coord = CLLocationCoordinate2D(latitude: CLLocationDegrees(waypoint.latitude), longitude: CLLocationDegrees(waypoint.longitude))
@@ -44,20 +78,125 @@ class ViewController: NSViewController, MKMapViewDelegate {
         let polyline = MKGeodesicPolyline(coordinates: points, count: points.count)
         mapView.add(polyline)
         
+        // *** CENTER PATH
         let padding = CGFloat(10.0)
         let insets = EdgeInsets(top: padding, left: padding, bottom: padding, right: padding)
         self.mapView.setVisibleMapRect(polyline.boundingMapRect, edgePadding: insets, animated: true)
+        
+        // *** COMPUTE ADDITIONAL FLIGHT INFORMATION
+        // TODO: Async with loading indicator
+        document.igcFile.process()
+        updateStaticInformationLabels()
+        
+        
+        // *** UI SETUP
+        slider.minValue = 0
+        slider.maxValue = Double(document.igcFile.waypoints.count - 1)
+        
+        // *** CREATE ANNOTATION
+        annotation = MKPointAnnotation()
+        annotation.coordinate = CLLocationCoordinate2D(latitude: CLLocationDegrees(document.igcFile.waypoints[0].latitude), longitude: CLLocationDegrees(document.igcFile.waypoints[0].longitude))
+        annotation.title = "You"
+        mapView.addAnnotation(annotation)
+        
+        changeCurrentWaypointIndex(0)
+    }
+    
+    // MARK: - UI Methods
+    func updateStaticInformationLabels() {
+        guard let recordingDate = document.igcFile.header.recordingDate else {
+            occurredError = ViewControllerError.noRecordingDateSpecified
+            return
+        }
+        
+        // WARNING: Check if there are at least two waypoints
+        let firstEntry = document.igcFile.waypoints[0]
+        let lastEntry = document.igcFile.waypoints[document.igcFile.waypoints.count - 1]
+        let duration = lastEntry.date.timeIntervalSince1970 - firstEntry.date.timeIntervalSince1970
+        
+        titleTextField.stringValue = "Flight on \(formatDate(date: recordingDate))"
+        pilotTextField.stringValue = document.igcFile.header.pic ?? "???"
+        coPilotTextField.stringValue = document.igcFile.header.secondPilot ?? "-"
+        aircraftTextField.stringValue = document.igcFile.header.gliderType ?? "?"
+        registrationTextField.stringValue = document.igcFile.header.gliderRegistration ?? "?"
+        classificationTextField.stringValue = document.igcFile.header.gliderClassification ?? "?"
+        startTextField.stringValue = formatTime(date: firstEntry.date)
+        endTextField.stringValue = formatTime(date: lastEntry.date)
+        durationTextField.stringValue = duration.getFormattedTime()
+        distanceTextField.stringValue = "\(String(format: "%.1f", document.igcFile.totalDistance.kilometers))km"
+    }
+    
+    func changeCurrentWaypointIndex(_ newIndex: Int) {
+        currentWaypointIndex = newIndex
+        let currentWaypoint = document.igcFile.waypoints[currentWaypointIndex]
+        
+        annotation.coordinate = CLLocationCoordinate2D(latitude: CLLocationDegrees(currentWaypoint.latitude), longitude: CLLocationDegrees(currentWaypoint.longitude))
+        
+        pressureAltTextField.stringValue = "\(String(format: "%.1f", currentWaypoint.pressureAltitude))m.ü.M"
+        gnssAltTextField.stringValue = "\(String(format: "%.1f", currentWaypoint.gnssAltitude))m.ü.M"
+        timeTextField.stringValue = formatTime(date: currentWaypoint.date)
+        
+        if newIndex == 0 {
+            backButton.isEnabled = false
+        } else if !backButton.isEnabled {
+            backButton.isEnabled = true
+        }
+        
+        if newIndex == document.igcFile.waypoints.count - 1 {
+            forwardButton.isEnabled = false
+        } else if !forwardButton.isEnabled {
+            forwardButton.isEnabled = true
+        }
+    }
+    
+    // MARK: - MKMapView delegate
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        return MKPinAnnotationView(annotation: annotation, reuseIdentifier: "pin")
     }
     
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
         if overlay is MKPolyline {
             let polylineRenderer = MKPolylineRenderer(overlay: overlay)
             polylineRenderer.strokeColor = NSColor.blue
-            polylineRenderer.lineWidth = 4
+            polylineRenderer.lineWidth = 2
             return polylineRenderer
         }
         
         return MKOverlayRenderer(overlay: overlay)
+    }
+    
+    // MARK: - User interaction
+    @IBAction func sliderValueChanged(_ sender: NSSlider) {
+        changeCurrentWaypointIndex(sender.integerValue)
+    }
+    
+    @IBAction func backButtonPressed(_ sender: NSButton) {
+        changeCurrentWaypointIndex(max(currentWaypointIndex - 1, 0))
+    }
+    
+    @IBAction func forwardButtonPressed(_ sender: NSButton) {
+        changeCurrentWaypointIndex((currentWaypointIndex + 1) % document.igcFile.waypoints.count)
+    }
+    
+    // MARK: - Utilities
+    func formatDate(date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.timeZone = TimeZone(abbreviation: "UTC")
+        formatter.dateStyle = .short
+        formatter.timeStyle = .none
+        formatter.locale = Calendar.current.locale
+        
+        return formatter.string(from: date)
+    }
+    
+    func formatTime(date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.timeZone = TimeZone(abbreviation: "UTC")
+        formatter.dateStyle = .none
+        formatter.timeStyle = .medium
+        formatter.locale = Calendar.current.locale
+        
+        return formatter.string(from: date)
     }
 
     override var representedObject: Any? {
@@ -65,7 +204,5 @@ class ViewController: NSViewController, MKMapViewDelegate {
             // Update the view, if already loaded.
         }
     }
-
-
 }
 

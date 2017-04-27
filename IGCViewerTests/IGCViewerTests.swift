@@ -21,6 +21,16 @@ class IGCViewerTests: XCTestCase {
         super.tearDown()
     }
     
+    func testDistanceUnit() {
+        let h = 3.0.m + 2.0.m
+        XCTAssert(h.meters == 5.0, "3m + 2m != 5m")
+        
+        XCTAssert(2.0.m * 3.0.m == 6.0.m, "2m * 3m != 6m")
+        XCTAssert(25.0.nm ~ 46300.0.m, "25NM != 46300m")
+        XCTAssert(752.0.ft ~ 229.21.m, "752ft != 229.21m")
+        XCTAssert(2000.m.kilometers == 2.0, "2000m != 2km")
+    }
+    
     func testStringRegexExtension() {
         /** FIRST **/
         var matches = "FDTE230417" ~> "FDTE(\\d{2})(\\d{2})(\\d{2})"

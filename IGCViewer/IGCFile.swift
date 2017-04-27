@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import CoreLocation
 
 class IGCHeader: NSObject {
     var pic: String?
@@ -47,12 +48,23 @@ class IGCHeader: NSObject {
 }
 
 class IGCFile: NSObject {
-    var manufacutrerCode: String
+    var manufacutrerCode: String = "XXX"
     var header: IGCHeader = IGCHeader()
     var waypoints: [IGCWaypoint] = []
+    var totalDistance: DistanceUnit = 0.m
     
-    override init() {
-        manufacutrerCode = "XXX"
+    func process() {
+        for i in 1..<waypoints.count {
+            let waypoint = waypoints[i]
+            let previousWaypoint = waypoints[i-1]
+            
+            let previousCoord = CLLocation(latitude: CLLocationDegrees(previousWaypoint.latitude), longitude: CLLocationDegrees(previousWaypoint.longitude))
+            let currentCoord = CLLocation(latitude: CLLocationDegrees(waypoint.latitude), longitude: CLLocationDegrees(waypoint.longitude))
+            let distance = currentCoord.distance(from: previousCoord)
+            waypoint.distanceSinceLastWaypoint = distance.m
+            
+            totalDistance += distance.m
+        }
     }
     
     override var description: String {

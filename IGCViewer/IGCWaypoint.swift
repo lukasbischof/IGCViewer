@@ -20,6 +20,7 @@ class IGCWaypoint: IGCPoint {
     var fixValidity: ValidityFix
     var pressureAltitude: Float
     var gnssAltitude: Float
+    var distanceSinceLastWaypoint: DistanceUnit?
 
     init(latitude: Float, longitude: Float, date: Date, validityFix: String, pressureAltitude: Float, gnssAltitude: Float) {
         if (validityFix.lowercased() == "a") {

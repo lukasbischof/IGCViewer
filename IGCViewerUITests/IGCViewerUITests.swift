@@ -28,4 +28,14 @@ class IGCViewerUITests: XCTestCase {
         super.tearDown()
     }
     
+    func testMap() {
+        
+        let window = XCUIApplication().windows["2017-04-23-XCS-AAA-01.igc"]
+        let zoomInButton = window.buttons["Zoom In"]
+        zoomInButton.click()
+        zoomInButton.click()
+        window.buttons["Zoom Out"].doubleClick()
+        window.otherElements["Compass"].click()
+        
+    }
 }

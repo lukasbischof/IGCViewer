@@ -11,6 +11,7 @@ import Cocoa
 class IGCDocument: NSDocument {
     
     var igcFile: IGCFile!
+    var igcParsingError: IGCParsingError?
 
     override init() {
         super.init()
@@ -27,6 +28,7 @@ class IGCDocument: NSDocument {
         let windowController = storyboard.instantiateController(withIdentifier: "Document Window Controller") as! NSWindowController
         windowController.window?.backgroundColor = NSColor.white
         windowController.window?.titlebarAppearsTransparent = true
+        windowController.window?.isMovableByWindowBackground = true
         self.addWindowController(windowController)
     }
 
@@ -51,8 +53,12 @@ class IGCDocument: NSDocument {
             self.igcFile = parser.outputFile
         } catch IGCParsingError.fileEncodingNotValid {
             Swift.print("File encoding not valid!!")
+            
+            igcParsingError = .fileEncodingNotValid
         } catch IGCParsingError.fileNotValid(let atLine, let why) {
             Swift.print("Can't parse file. Error at line \(atLine): \(why)")
+            
+            igcParsingError = IGCParsingError.fileNotValid(atLine: atLine, why: why)
         }
     }
 
