@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="12118" systemVersion="16B2555" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16B2555" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="12118"/>
-        <plugIn identifier="com.apple.MapKitIBPlugin" version="12118"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="12120"/>
+        <plugIn identifier="com.apple.MapKitIBPlugin" version="12120"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -1241,6 +1241,10 @@
                                             <constraint firstItem="xi1-AQ-7Fy" firstAttribute="top" secondItem="Br9-L2-pbt" secondAttribute="top" id="rpv-2V-pUB"/>
                                         </constraints>
                                     </customView>
+                                    <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0M4-6q-FMz" customClass="LineChartView" customModule="Charts">
+                                        <rect key="frame" x="482" y="187" width="462" height="132"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                    </customView>
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="6mb-ui-uXP" firstAttribute="leading" secondItem="uQh-x6-mCA" secondAttribute="trailing" id="4MZ-EY-1Tm"/>
@@ -1276,6 +1280,7 @@
                         <outlet property="aircraftTextField" destination="Pnf-GT-yEF" id="d8B-vG-7Cs"/>
                         <outlet property="avgSpeedTextField" destination="uxN-hI-cza" id="yB0-ui-bLq"/>
                         <outlet property="backButton" destination="UUd-tc-xV3" id="kKE-DH-ASI"/>
+                        <outlet property="chartsView" destination="0M4-6q-FMz" id="r63-5Q-W3D"/>
                         <outlet property="classificationTextField" destination="5TW-Mr-1f3" id="vaA-1G-fbQ"/>
                         <outlet property="coPilotTextField" destination="53g-AG-Ctf" id="0Yh-0k-rv6"/>
                         <outlet property="distanceTextField" destination="kh1-nm-arM" id="FMr-5C-Zsz"/>

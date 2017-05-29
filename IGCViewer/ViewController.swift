@@ -8,6 +8,7 @@
 
 import Cocoa
 import MapKit
+import Charts
 
 enum ViewControllerError: Error {
     case noRecordingDateSpecified
@@ -39,6 +40,7 @@ class ViewController: NSViewController, MKMapViewDelegate {
     @IBOutlet weak var forwardButton: NSButton!
 
     @IBOutlet weak var mapView: MKMapView!
+    @IBOutlet weak var chartsView: LineChartView!
     var document: IGCDocument!
     var occurredError: Error?
     var annotation: MKPointAnnotation!
@@ -92,6 +94,26 @@ class ViewController: NSViewController, MKMapViewDelegate {
         // *** UI SETUP
         slider.minValue = 0
         slider.maxValue = Double(document.igcFile.waypoints.count - 1)
+        
+        // Chart
+        let dataEntries = document.igcFile.waypoints.map { (waypoint) -> ChartDataEntry in
+            return ChartDataEntry(x: waypoint.date.timeIntervalSince1970, y: Double(waypoint.pressureAltitude))
+        }
+        
+        let data = LineChartData()
+        let ds1 = LineChartDataSet(values: dataEntries, label: nil)
+        ds1.colors = [NSUIColor.red]
+        ds1.mode = .linear
+        ds1.drawCirclesEnabled = false
+        ds1.drawValuesEnabled = false
+        ds1.lineWidth = 2
+        data.addDataSet(ds1)
+        
+        chartsView.data = data
+        chartsView.gridBackgroundColor = NSUIColor.white
+        chartsView.chartDescription?.text = ""
+        chartsView.xAxis.valueFormatter = CustomXAxisTimeFormatter()
+        chartsView.leftYAxisRenderer.axis?.valueFormatter = CustomYAxisTimeFormatter()
         
         // *** CREATE ANNOTATION
         annotation = MKPointAnnotation()
@@ -177,32 +199,42 @@ class ViewController: NSViewController, MKMapViewDelegate {
     @IBAction func forwardButtonPressed(_ sender: NSButton) {
         changeCurrentWaypointIndex((currentWaypointIndex + 1) % document.igcFile.waypoints.count)
     }
-    
-    // MARK: - Utilities
-    func formatDate(date: Date) -> String {
-        let formatter = DateFormatter()
-        formatter.timeZone = TimeZone(abbreviation: "UTC")
-        formatter.dateStyle = .short
-        formatter.timeStyle = .none
-        formatter.locale = Calendar.current.locale
-        
-        return formatter.string(from: date)
-    }
-    
-    func formatTime(date: Date) -> String {
-        let formatter = DateFormatter()
-        formatter.timeZone = TimeZone(abbreviation: "UTC")
-        formatter.dateStyle = .none
-        formatter.timeStyle = .medium
-        formatter.locale = Calendar.current.locale
-        
-        return formatter.string(from: date)
-    }
 
     override var representedObject: Any? {
         didSet {
             // Update the view, if already loaded.
         }
     }
+}
+
+// MARK: - Utilities
+func formatDate(date: Date) -> String {
+    let formatter = DateFormatter()
+    formatter.timeZone = TimeZone(abbreviation: "UTC")
+    formatter.dateStyle = .short
+    formatter.timeStyle = .none
+    formatter.locale = Calendar.current.locale
+    
+    return formatter.string(from: date)
+}
+
+func formatTime(date: Date) -> String {
+    let formatter = DateFormatter()
+    formatter.timeZone = TimeZone(abbreviation: "UTC")
+    formatter.dateStyle = .none
+    formatter.timeStyle = .medium
+    formatter.locale = Calendar.current.locale
+    
+    return formatter.string(from: date)
+}
+
+func formatTime(date: Date, renderSeconds: Bool) -> String {
+    let formatter = DateFormatter()
+    formatter.timeZone = TimeZone(abbreviation: "UTC")
+    formatter.dateStyle = .none
+    formatter.timeStyle = renderSeconds ? .medium : .short
+    formatter.locale = Calendar.current.locale
+    
+    return formatter.string(from: date)
 }
 
