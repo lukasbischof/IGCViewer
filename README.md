@@ -1,5 +1,5 @@
 # IGCViewer
-A macOS IGC file viewer.
+A macOS app for reading IGC log files.
 
 ## Frameworks
 This Project uses the [Charts](https://github.com/danielgindi/Charts) framework which is licensed under the Apace-2.0 license: 
