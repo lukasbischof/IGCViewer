@@ -82,7 +82,7 @@ class ViewController: NSViewController, MKMapViewDelegate {
         
         // *** CENTER PATH
         let padding = CGFloat(10.0)
-        let insets = EdgeInsets(top: padding, left: padding, bottom: padding, right: padding)
+        let insets = NSEdgeInsets(top: padding, left: padding, bottom: padding, right: padding)
         self.mapView.setVisibleMapRect(polyline.boundingMapRect, edgePadding: insets, animated: true)
         
         // *** COMPUTE ADDITIONAL FLIGHT INFORMATION

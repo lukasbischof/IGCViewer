@@ -14,7 +14,7 @@ extension String {
     
     func testRegex(regex: String) -> Bool {
         if let regularExpression = try? NSRegularExpression(pattern: regex, options: []) {
-            return regularExpression.matches(in: self, options: NSRegularExpression.MatchingOptions(rawValue: 0), range: NSRange(location: 0, length: self.characters.count)).count > 0
+            return regularExpression.matches(in: self, options: NSRegularExpression.MatchingOptions(rawValue: 0), range: NSRange(location: 0, length: self.count)).count > 0
         } else {
             print("Invalid Regex '\(regex)'")
             return false
@@ -25,11 +25,11 @@ extension String {
         var ret: [String] = []
         
         if let regex = try? NSRegularExpression(pattern: pattern, options: []) {
-            let matches = regex.matches(in: self, options: NSRegularExpression.MatchingOptions(rawValue: 0), range: NSRange(location: 0, length: self.characters.count))
+            let matches = regex.matches(in: self, options: NSRegularExpression.MatchingOptions(rawValue: 0), range: NSRange(location: 0, length: self.count))
             
             for match in matches {
                 for n in 1..<match.numberOfRanges {
-                    let range = match.rangeAt(n)
+                    let range = match.range(at: n)
                     ret.append(self.substring(with: self.index(self.startIndex, offsetBy: range.location)..<self.index(self.startIndex, offsetBy: range.location + range.length)))
                 }
             }

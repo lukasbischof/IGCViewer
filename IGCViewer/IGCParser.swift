@@ -74,7 +74,7 @@ class IGCParser: NSObject {
  */
             
             let line = String(scannedLine!)
-            if line.characters.count < 2 {
+            if line.count < 2 {
                 continue
             }
             
@@ -84,15 +84,15 @@ class IGCParser: NSObject {
             switch String(token).uppercased() {
             case "A":
                 // FR manufacturer and identification
-                try processARecord(recordValue)
+                try processARecord(String(recordValue))
                 
             case "H":
                 // File header
-                try processHRecord(recordValue)
+                try processHRecord(String(recordValue))
                 
             case "B":
                 // Fix plus any extension data listed in I Record
-                try processBRecord(recordValue)
+                try processBRecord(String(recordValue))
                 
             default:
                 //print("Unknown record")
