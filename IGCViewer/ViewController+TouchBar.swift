@@ -36,6 +36,7 @@ extension ViewController : NSTouchBarDelegate {
         touchBarItem.slider.minValue = self.slider.minValue
         touchBarItem.slider.maxValue = self.slider.maxValue
         touchBarItem.action = #selector(sliderValueChanged(_:))
+        touchBarItem.customizationLabel = "Flight Scrubber"
         
         return touchBarItem
     }
