@@ -24,6 +24,10 @@
 		48ECFAAC1EB0C4A80063C09B /* IGCViewerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48ECFAAB1EB0C4A80063C09B /* IGCViewerUITests.swift */; };
 		48ECFABA1EB0D3950063C09B /* IGCParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48ECFAB91EB0D3950063C09B /* IGCParser.swift */; };
 		48ECFABC1EB0D3A60063C09B /* IGCFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48ECFABB1EB0D3A60063C09B /* IGCFile.swift */; };
+		4B443D6720951B970087430D /* ViewController+TouchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B443D6620951B970087430D /* ViewController+TouchBar.swift */; };
+		4B443D6920951C500087430D /* TouchBarIdentifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B443D6820951C500087430D /* TouchBarIdentifiers.swift */; };
+		4B443D6B209521CE0087430D /* WindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B443D6A209521CE0087430D /* WindowController.swift */; };
+		4B443D6D209526C90087430D /* DateUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B443D6C209526C90087430D /* DateUtilities.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -101,6 +105,10 @@
 		48ECFAAD1EB0C4A80063C09B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		48ECFAB91EB0D3950063C09B /* IGCParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IGCParser.swift; sourceTree = "<group>"; };
 		48ECFABB1EB0D3A60063C09B /* IGCFile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IGCFile.swift; sourceTree = "<group>"; };
+		4B443D6620951B970087430D /* ViewController+TouchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewController+TouchBar.swift"; sourceTree = "<group>"; };
+		4B443D6820951C500087430D /* TouchBarIdentifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchBarIdentifiers.swift; sourceTree = "<group>"; };
+		4B443D6A209521CE0087430D /* WindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowController.swift; sourceTree = "<group>"; };
+		4B443D6C209526C90087430D /* DateUtilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateUtilities.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -134,6 +142,7 @@
 			children = (
 				483524CF1EB2713B006A0E7E /* TimeInterval+formatting.swift */,
 				482880F51EB107AD006801E1 /* String+Regex.swift */,
+				4B443D6C209526C90087430D /* DateUtilities.swift */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -184,7 +193,10 @@
 			isa = PBXGroup;
 			children = (
 				48ECFA8C1EB0C4A80063C09B /* AppDelegate.swift */,
+				4B443D6A209521CE0087430D /* WindowController.swift */,
 				48ECFA8E1EB0C4A80063C09B /* ViewController.swift */,
+				4B443D6620951B970087430D /* ViewController+TouchBar.swift */,
+				4B443D6820951C500087430D /* TouchBarIdentifiers.swift */,
 				489CDE051EDC8FFE00A97844 /* CustomChartTimeFormatter.swift */,
 				48ECFA901EB0C4A80063C09B /* IGCDocument.swift */,
 				482880F71EB13266006801E1 /* IGC */,
@@ -381,11 +393,15 @@
 				483524D01EB2713B006A0E7E /* TimeInterval+formatting.swift in Sources */,
 				48ECFABC1EB0D3A60063C09B /* IGCFile.swift in Sources */,
 				48ECFA8F1EB0C4A80063C09B /* ViewController.swift in Sources */,
+				4B443D6D209526C90087430D /* DateUtilities.swift in Sources */,
+				4B443D6B209521CE0087430D /* WindowController.swift in Sources */,
 				482880FB1EB13340006801E1 /* IGCWaypoint.swift in Sources */,
 				483524D21EB27681006A0E7E /* DistanceUnit.swift in Sources */,
 				489CDE061EDC8FFE00A97844 /* CustomChartTimeFormatter.swift in Sources */,
+				4B443D6720951B970087430D /* ViewController+TouchBar.swift in Sources */,
 				482880F61EB107AD006801E1 /* String+Regex.swift in Sources */,
 				48ECFA8D1EB0C4A80063C09B /* AppDelegate.swift in Sources */,
+				4B443D6920951C500087430D /* TouchBarIdentifiers.swift in Sources */,
 				48ECFABA1EB0D3950063C09B /* IGCParser.swift in Sources */,
 				482880F91EB13288006801E1 /* IGCPoint.swift in Sources */,
 				48ECFA911EB0C4A80063C09B /* IGCDocument.swift in Sources */,

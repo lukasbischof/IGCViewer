@@ -45,6 +45,24 @@ class IGCHeader: NSObject {
                     ">";
         }
     }
+    
+    func touchBarLabel() -> String {
+        var fragments: [String?] = []
+        if let recordingDate = recordingDate {
+            fragments.append(formatDate(date: recordingDate))
+        }
+        
+        if let pic = pic {
+            fragments.append(pic)
+        }
+        
+        if let gliderType = gliderType {
+            fragments.append(gliderType)
+        }
+        
+        let arr = fragments.filter({ $0 != nil }) as! [String]
+        return arr.joined(separator: ", ")
+    }
 }
 
 class IGCFile: NSObject {

@@ -16,6 +16,7 @@ enum ViewControllerError: Error {
 
 class ViewController: NSViewController, MKMapViewDelegate {
     
+    // MARK: Outlets
     @IBOutlet weak var titleTextField: NSTextField!
     @IBOutlet weak var pilotTextField: NSTextField!
     @IBOutlet weak var coPilotTextField: NSTextField!
@@ -41,6 +42,8 @@ class ViewController: NSViewController, MKMapViewDelegate {
 
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var chartsView: LineChartView!
+    
+    // MARK: Instance Vars
     var document: IGCDocument!
     var occurredError: Error?
     var annotation: MKPointAnnotation!
@@ -188,8 +191,14 @@ class ViewController: NSViewController, MKMapViewDelegate {
     }
     
     // MARK: - User interaction
-    @IBAction func sliderValueChanged(_ sender: NSSlider) {
-        changeCurrentWaypointIndex(sender.integerValue)
+    @IBAction func sliderValueChanged(_ sender: NSObject) {
+        if sender is NSSlider {
+            changeCurrentWaypointIndex((sender as! NSSlider).integerValue)
+        } else if #available(macOS 10.12.2, *), sender is NSSliderTouchBarItem {
+            let newValue = (sender as! NSSliderTouchBarItem).slider.integerValue
+            changeCurrentWaypointIndex(newValue)
+            self.slider.integerValue = newValue
+        }
     }
     
     @IBAction func backButtonPressed(_ sender: NSButton) {
@@ -206,35 +215,3 @@ class ViewController: NSViewController, MKMapViewDelegate {
         }
     }
 }
-
-// MARK: - Utilities
-func formatDate(date: Date) -> String {
-    let formatter = DateFormatter()
-    formatter.timeZone = TimeZone(abbreviation: "UTC")
-    formatter.dateStyle = .short
-    formatter.timeStyle = .none
-    formatter.locale = Calendar.current.locale
-    
-    return formatter.string(from: date)
-}
-
-func formatTime(date: Date) -> String {
-    let formatter = DateFormatter()
-    formatter.timeZone = TimeZone(abbreviation: "UTC")
-    formatter.dateStyle = .none
-    formatter.timeStyle = .medium
-    formatter.locale = Calendar.current.locale
-    
-    return formatter.string(from: date)
-}
-
-func formatTime(date: Date, renderSeconds: Bool) -> String {
-    let formatter = DateFormatter()
-    formatter.timeZone = TimeZone(abbreviation: "UTC")
-    formatter.dateStyle = .none
-    formatter.timeStyle = renderSeconds ? .medium : .short
-    formatter.locale = Calendar.current.locale
-    
-    return formatter.string(from: date)
-}
-
