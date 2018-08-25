@@ -19,12 +19,12 @@ class CustomXAxisTimeFormatter: NSObject, IAxisValueFormatter {
     }
 }
 
-class CustomYAxisTimeFormatter: NSObject, IAxisValueFormatter {
+class CustomYAxisAltitudeFormatter: NSObject, IAxisValueFormatter {
     override init() {
         
     }
     
     func stringForValue(_ value: Double, axis: AxisBase?) -> String {
-        return "\(value)m"
+        return "\(Int(value))m"
     }
 }

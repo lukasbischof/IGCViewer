@@ -38,6 +38,11 @@ extension ViewController : NSTouchBarDelegate {
         touchBarItem.action = #selector(sliderValueChanged(_:))
         touchBarItem.customizationLabel = "Flight Scrubber"
         
+        let valueCangeNotification = NSNotification.Name(rawValue: ViewControllerNotificationNames.physicalSliderValueChanged)
+        NotificationCenter.default.addObserver(forName: valueCangeNotification, object: nil, queue: nil) { (notification) in
+            touchBarItem.slider.integerValue = notification.userInfo![ViewControllerNotificationKeys.newValue] as! Int
+        }
+        
         return touchBarItem
     }
     

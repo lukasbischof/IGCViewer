@@ -10,6 +10,14 @@ import Cocoa
 import MapKit
 import Charts
 
+struct ViewControllerNotificationNames {
+    public static let physicalSliderValueChanged = "physicalSliderValueChanged"
+}
+
+struct ViewControllerNotificationKeys {
+    public static let newValue = "newValue"
+}
+
 enum ViewControllerError: Error {
     case noRecordingDateSpecified
 }
@@ -43,6 +51,9 @@ class ViewController: NSViewController, MKMapViewDelegate {
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var chartsView: LineChartView!
     
+    var currentWaypoint: IGCWaypoint!
+    var altitudeYLine: ChartLimitLine!
+    
     // MARK: Instance Vars
     var document: IGCDocument!
     var occurredError: Error?
@@ -67,9 +78,10 @@ class ViewController: NSViewController, MKMapViewDelegate {
         
         // TODO: Async with loading indicator
         document.igcFile.process()
+        currentWaypoint = document.igcFile.waypoints.first
         updateStaticInformationLabels()
         setupUI()
-        setupAltitudeCart()
+        setupAltitudeChart()
         createMapAnnotation()
     }
     
@@ -110,10 +122,19 @@ class ViewController: NSViewController, MKMapViewDelegate {
         slider.maxValue = Double(document.igcFile.waypoints.count - 1)
     }
     
-    fileprivate func setupAltitudeCart() {
+    fileprivate func setupAltitudeChart() {
         let dataEntries = document.igcFile.waypoints.map { (waypoint) -> ChartDataEntry in
             return ChartDataEntry(x: waypoint.date.timeIntervalSince1970, y: Double(waypoint.pressureAltitude))
         }
+        
+        var highestAltitude = 0.0
+        for entry in dataEntries {
+            if entry.y > highestAltitude {
+                highestAltitude = entry.y
+            }
+        }
+        
+        print(highestAltitude)
         
         let data = LineChartData()
         let ds1 = LineChartDataSet(values: dataEntries, label: nil)
@@ -128,7 +149,21 @@ class ViewController: NSViewController, MKMapViewDelegate {
         chartsView.gridBackgroundColor = NSUIColor.white
         chartsView.chartDescription?.text = ""
         chartsView.xAxis.valueFormatter = CustomXAxisTimeFormatter()
-        chartsView.leftYAxisRenderer.axis?.valueFormatter = CustomYAxisTimeFormatter()
+        chartsView.leftYAxisRenderer.axis?.valueFormatter = CustomYAxisAltitudeFormatter()
+        chartsView.legend.form = .none
+        
+        let bestAltLine = ChartLimitLine(limit: highestAltitude, label: "Best: \(Int(highestAltitude))m")
+        bestAltLine.lineColor = NSUIColor.green
+        bestAltLine.labelPosition = .leftBottom
+        bestAltLine.valueFont = NSFont.systemFont(ofSize: 8)
+        bestAltLine.lineDashPhase = 5
+        bestAltLine.lineDashLengths = [10]
+        chartsView.leftAxis.addLimitLine(bestAltLine)
+        
+        altitudeYLine = ChartLimitLine(limit: currentWaypoint.date.timeIntervalSince1970)
+        altitudeYLine.lineColor = NSUIColor.blue
+        
+        chartsView.xAxis.addLimitLine(altitudeYLine)
     }
     
     fileprivate func createMapAnnotation() {
@@ -166,13 +201,19 @@ class ViewController: NSViewController, MKMapViewDelegate {
     
     func changeCurrentWaypointIndex(_ newIndex: Int) {
         currentWaypointIndex = newIndex
-        let currentWaypoint = document.igcFile.waypoints[currentWaypointIndex]
+        currentWaypoint = document.igcFile.waypoints[currentWaypointIndex]
         
         annotation.coordinate = CLLocationCoordinate2D(latitude: CLLocationDegrees(currentWaypoint.latitude), longitude: CLLocationDegrees(currentWaypoint.longitude))
         
         pressureAltTextField.stringValue = "\(String(format: "%.1f", currentWaypoint.pressureAltitude))m.ü.M"
         gnssAltTextField.stringValue = "\(String(format: "%.1f", currentWaypoint.gnssAltitude))m.ü.M"
         timeTextField.stringValue = formatTime(date: currentWaypoint.date)
+        latitudeTextField.stringValue = "\(currentWaypoint.latitude)°"
+        longitudeTextField.stringValue = "\(currentWaypoint.longitude)°"
+        
+        altitudeYLine.limit = currentWaypoint.date.timeIntervalSince1970
+        
+        chartsView.notifyDataSetChanged()
         
         if newIndex == 0 {
             backButton.isEnabled = false
@@ -206,7 +247,11 @@ class ViewController: NSViewController, MKMapViewDelegate {
     // MARK: - User interaction
     @IBAction func sliderValueChanged(_ sender: NSObject) {
         if sender is NSSlider {
-            changeCurrentWaypointIndex((sender as! NSSlider).integerValue)
+            let newValue = (sender as! NSSlider).integerValue
+            changeCurrentWaypointIndex(newValue)
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: ViewControllerNotificationNames.physicalSliderValueChanged),
+                                            object: self,
+                                            userInfo: [ViewControllerNotificationKeys.newValue: newValue])
         } else if #available(macOS 10.12.2, *), sender is NSSliderTouchBarItem {
             let newValue = (sender as! NSSliderTouchBarItem).slider.integerValue
             changeCurrentWaypointIndex(newValue)
@@ -226,5 +271,9 @@ class ViewController: NSViewController, MKMapViewDelegate {
         didSet {
             // Update the view, if already loaded.
         }
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
 }

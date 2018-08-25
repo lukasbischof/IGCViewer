@@ -12,7 +12,7 @@
 		482880FB1EB13340006801E1 /* IGCWaypoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 482880FA1EB13340006801E1 /* IGCWaypoint.swift */; };
 		483524D01EB2713B006A0E7E /* TimeInterval+formatting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483524CF1EB2713B006A0E7E /* TimeInterval+formatting.swift */; };
 		483524D21EB27681006A0E7E /* DistanceUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483524D11EB27681006A0E7E /* DistanceUnit.swift */; };
-		489CDE061EDC8FFE00A97844 /* CustomChartTimeFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489CDE051EDC8FFE00A97844 /* CustomChartTimeFormatter.swift */; };
+		489CDE061EDC8FFE00A97844 /* CustomChartFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489CDE051EDC8FFE00A97844 /* CustomChartFormatter.swift */; };
 		48ECFA8D1EB0C4A80063C09B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48ECFA8C1EB0C4A80063C09B /* AppDelegate.swift */; };
 		48ECFA8F1EB0C4A80063C09B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48ECFA8E1EB0C4A80063C09B /* ViewController.swift */; };
 		48ECFA911EB0C4A80063C09B /* IGCDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48ECFA901EB0C4A80063C09B /* IGCDocument.swift */; };
@@ -69,7 +69,7 @@
 		482880FA1EB13340006801E1 /* IGCWaypoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IGCWaypoint.swift; sourceTree = "<group>"; };
 		483524CF1EB2713B006A0E7E /* TimeInterval+formatting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TimeInterval+formatting.swift"; sourceTree = "<group>"; };
 		483524D11EB27681006A0E7E /* DistanceUnit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DistanceUnit.swift; sourceTree = "<group>"; };
-		489CDE051EDC8FFE00A97844 /* CustomChartTimeFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomChartTimeFormatter.swift; sourceTree = "<group>"; };
+		489CDE051EDC8FFE00A97844 /* CustomChartFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomChartFormatter.swift; sourceTree = "<group>"; };
 		48ECFA891EB0C4A80063C09B /* IGCViewer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IGCViewer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		48ECFA8C1EB0C4A80063C09B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		48ECFA8E1EB0C4A80063C09B /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -179,7 +179,7 @@
 				48ECFA8E1EB0C4A80063C09B /* ViewController.swift */,
 				4B443D6620951B970087430D /* ViewController+TouchBar.swift */,
 				4B443D6820951C500087430D /* TouchBarIdentifiers.swift */,
-				489CDE051EDC8FFE00A97844 /* CustomChartTimeFormatter.swift */,
+				489CDE051EDC8FFE00A97844 /* CustomChartFormatter.swift */,
 				48ECFA901EB0C4A80063C09B /* IGCDocument.swift */,
 				482880F71EB13266006801E1 /* IGC */,
 				48ECFA921EB0C4A80063C09B /* Assets.xcassets */,
@@ -458,7 +458,7 @@
 				4B443D6B209521CE0087430D /* WindowController.swift in Sources */,
 				482880FB1EB13340006801E1 /* IGCWaypoint.swift in Sources */,
 				483524D21EB27681006A0E7E /* DistanceUnit.swift in Sources */,
-				489CDE061EDC8FFE00A97844 /* CustomChartTimeFormatter.swift in Sources */,
+				489CDE061EDC8FFE00A97844 /* CustomChartFormatter.swift in Sources */,
 				4B443D6720951B970087430D /* ViewController+TouchBar.swift in Sources */,
 				482880F61EB107AD006801E1 /* String+Regex.swift in Sources */,
 				48ECFA8D1EB0C4A80063C09B /* AppDelegate.swift in Sources */,
