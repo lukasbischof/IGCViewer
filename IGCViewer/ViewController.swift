@@ -52,8 +52,6 @@ class ViewController: NSViewController, MKMapViewDelegate {
     // MARK: - View lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
         
         mapView.delegate = self
         mapView.layer?.borderColor = NSColor.lightGray.cgColor
@@ -63,6 +61,26 @@ class ViewController: NSViewController, MKMapViewDelegate {
     override func viewDidAppear() {
         super.viewDidAppear()
         
+        openDocument()
+        let polyline = drawFligtRoute()
+        centerPolyline(polyline)
+        
+        // TODO: Async with loading indicator
+        document.igcFile.process()
+        updateStaticInformationLabels()
+        setupUI()
+        setupAltitudeCart()
+        createMapAnnotation()
+    }
+    
+    fileprivate func centerPolyline(_ polyline: MKPolyline) {
+        // *** CENTER PATH
+        let padding = CGFloat(10.0)
+        let insets = NSEdgeInsets(top: padding, left: padding, bottom: padding, right: padding)
+        self.mapView.setVisibleMapRect(polyline.boundingMapRect, edgePadding: insets, animated: true)
+    }
+    
+    fileprivate func openDocument() {
         if let doc = self.view.window?.windowController?.document as? IGCDocument {
             document = doc
         } else {
@@ -72,8 +90,9 @@ class ViewController: NSViewController, MKMapViewDelegate {
                 assert(false)
             #endif
         }
-        
-        // *** DRAW LINE
+    }
+    
+    fileprivate func drawFligtRoute() -> MKPolyline {
         var points: [CLLocationCoordinate2D] = []
         for waypoint in document.igcFile.waypoints {
             let coord = CLLocationCoordinate2D(latitude: CLLocationDegrees(waypoint.latitude), longitude: CLLocationDegrees(waypoint.longitude))
@@ -83,22 +102,15 @@ class ViewController: NSViewController, MKMapViewDelegate {
         let polyline = MKGeodesicPolyline(coordinates: points, count: points.count)
         mapView.add(polyline)
         
-        // *** CENTER PATH
-        let padding = CGFloat(10.0)
-        let insets = NSEdgeInsets(top: padding, left: padding, bottom: padding, right: padding)
-        self.mapView.setVisibleMapRect(polyline.boundingMapRect, edgePadding: insets, animated: true)
-        
-        // *** COMPUTE ADDITIONAL FLIGHT INFORMATION
-        // TODO: Async with loading indicator
-        document.igcFile.process()
-        updateStaticInformationLabels()
-        
-        
-        // *** UI SETUP
+        return polyline
+    }
+    
+    fileprivate func setupUI() {
         slider.minValue = 0
         slider.maxValue = Double(document.igcFile.waypoints.count - 1)
-        
-        // Chart
+    }
+    
+    fileprivate func setupAltitudeCart() {
         let dataEntries = document.igcFile.waypoints.map { (waypoint) -> ChartDataEntry in
             return ChartDataEntry(x: waypoint.date.timeIntervalSince1970, y: Double(waypoint.pressureAltitude))
         }
@@ -117,8 +129,9 @@ class ViewController: NSViewController, MKMapViewDelegate {
         chartsView.chartDescription?.text = ""
         chartsView.xAxis.valueFormatter = CustomXAxisTimeFormatter()
         chartsView.leftYAxisRenderer.axis?.valueFormatter = CustomYAxisTimeFormatter()
-        
-        // *** CREATE ANNOTATION
+    }
+    
+    fileprivate func createMapAnnotation() {
         annotation = MKPointAnnotation()
         annotation.coordinate = CLLocationCoordinate2D(latitude: CLLocationDegrees(document.igcFile.waypoints[0].latitude), longitude: CLLocationDegrees(document.igcFile.waypoints[0].longitude))
         annotation.title = "You"
