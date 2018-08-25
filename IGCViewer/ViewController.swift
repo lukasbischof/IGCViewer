@@ -151,6 +151,7 @@ class ViewController: NSViewController, MKMapViewDelegate {
         chartsView.xAxis.valueFormatter = CustomXAxisTimeFormatter()
         chartsView.leftYAxisRenderer.axis?.valueFormatter = CustomYAxisAltitudeFormatter()
         chartsView.legend.form = .none
+        chartsView.rightAxis.drawLabelsEnabled = false
         
         let bestAltLine = ChartLimitLine(limit: highestAltitude, label: "Best: \(Int(highestAltitude))m")
         bestAltLine.lineColor = NSUIColor.green
