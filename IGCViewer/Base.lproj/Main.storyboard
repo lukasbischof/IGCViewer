@@ -746,7 +746,7 @@
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="23" id="Ni9-Kd-WJF"/>
                                                 </constraints>
-                                                <buttonCell key="cell" type="push" title="&lt;" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="7Kq-Oo-Uro">
+                                                <buttonCell key="cell" type="push" title="←" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="7Kq-Oo-Uro">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                     <font key="font" metaFont="system"/>
                                                 </buttonCell>
@@ -759,7 +759,7 @@
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="23" id="KsR-V4-ZUf"/>
                                                 </constraints>
-                                                <buttonCell key="cell" type="push" title="&gt;" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="yd0-R9-ufa">
+                                                <buttonCell key="cell" type="push" title="→" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="yd0-R9-ufa">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                     <font key="font" metaFont="system"/>
                                                 </buttonCell>
