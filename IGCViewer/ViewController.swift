@@ -133,9 +133,7 @@ class ViewController: NSViewController, MKMapViewDelegate {
                 highestAltitude = entry.y
             }
         }
-        
-        print(highestAltitude)
-        
+
         let data = LineChartData()
         let ds1 = LineChartDataSet(values: dataEntries, label: nil)
         ds1.colors = [NSUIColor.red]
